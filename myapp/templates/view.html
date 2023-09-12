@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin sinh viên</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th colspan="9">THÔNG TIN SINH VIÊN</th>
+        </tr>
+        <TR>
+            <th>mã sinh viên</th>
+            <th>Tên sinh viên</th>
+            <th>Mã trường</th>
+            <th>Tên trường</th>
+            <th>Mã Khoa</th>
+            <th>Tên Khoa</th>
+            <th>Lớp </th>
+            <th>Ảnh sv</th>
+            <th>Giới tính</th>
+        </TR>
+        <tr>
+            
+            <td>{{viewsv.masv}}</td>
+            <td>{{viewsv.tensv}}</td>
+            <td>{{viewsv.school.mat}}</td>
+            <td>{{viewsv.school.tent}}</td>
+            <td>{{viewsv.khoa.mak}}</td>
+            <td>{{viewsv.khoa.tenk}}</td>
+            <td>{{viewsv.lop}}</td>
+            <td><img src="/myapp/media/{{viewsv.image}}"></td>
+            <td>{{viewsv.gender}}</td>
+           
+        </tr>
+    </table>
+    <button><a href="{% url 'home' %}">exit</a></button>
+    <style>
+        table,th,td{
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th,td{
+            padding: 5px;
+        }
+        th{
+            background-color: coral;
+            color: white;
+        }
+        td{
+            background-color: tomato;
+            color:blue;
+            cursor: pointer;
+        }
+        button ,a{
+            margin-top:10px;
+            width: 50px;
+            text-decoration: none;
+            background-color: aqua;
+            height: 40px;
+            color: white;
+            border: none;
+            border-radius: 10px;
+        }
+        table,button{
+            margin-left: 20%;
+        }
+    </style>
+
+    
+</body>
+</html>

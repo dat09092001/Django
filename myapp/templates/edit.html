@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sửa sinh viên</title>
+</head>
+<body>
+    <div>
+        <h3>sửa sinh viên</h3>
+        <form action="{% url 'editsv' viewsv.id %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <h3>Mã sv:</h3>
+            <input type="text" name="masv" value="{{viewsv.masv}}">
+        
+            <h3 >Tên sv:</h3>
+            
+            <input type="text" name="tensv" value="{{viewsv.tensv}}">
+            
+            <h3>trường:</h3>
+            
+            <select name="school">
+               {% for i in school1 %}
+                
+                <option value="{{i}}">{{i}}</option>
+                {% endfor %}
+               
+            </select>
+            <h3>Khoa:</h3>
+            
+            <select name="khoa">
+                {% for i in khoa1 %}
+               
+                   <option value="{{i}}">{{i}}</option>
+               
+                {% endfor %}
+            </select>
+            <h3>Lớp:</h3>
+            <input type="text" name="lop" value="{{viewsv.lop}}">
+            <h3>ảnh:</h3>
+            <input type="file" name="image" value="{{viewsv.image}}">=
+            <h3>Giới tính:</h3>
+            <select name="gender">
+            
+                
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+            
+            </select>
+            
+            
+            <div>
+            <button type="submit">save</button>
+            <button><a href="{% url 'home' %}">exit</a></button>
+            </div>
+
+
+        </form>
+</body>
+</html>

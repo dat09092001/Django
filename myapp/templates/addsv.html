@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>add sinh viên</title>
+</head>
+<body>
+    <div>
+        <h3>Thêm sinh viên</h3>
+        <form action="{% url 'addsv'%}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form}}
+        
+            <button type="submit">save</button>
+            <button><a href="">exit</a></button>
+            </div>
+
+
+        </form>
+       <p>{{mak}}</p>
+    </div>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        div{
+            background-color: aqua;
+
+        }
+        
+    </style>
+    
+</body>
+</html>

@@ -1,0 +1,330 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}"> {% endcomment %}
+    <title>trang chủ</title>
+    <script type="text/javascript">
+        function show(event,tagname){
+           var i= document.getElementById(tagname)
+           if(i.style.display=="none"){
+            i.style.display="block";
+           }else{
+            i.style.display="none";
+           }
+    
+        
+        }
+        function show_tab1(tabname){
+           
+           var tab1=document.getElementsByClassName("tabcontent");
+           for(var i=0;i<tab1.length;i++){
+                tab1[i].style.display="none";
+           }
+           document.getElementById(tabname).style.display='gird';
+           document.getElementById('tab1linhk').style.backgroundColor="darkcyan";
+
+        
+           
+           
+
+
+        }
+        function show_tab23(event,value1,value2){
+            var select=document.getElementById("select").value
+            var tab1=document.getElementsByClassName("tabcontent");
+           for(var i=0;i<tab1.length;i++){
+                tab1[i].style.display="none";
+           }
+           if(select==value1){
+               document.getElementById(value1).style.display="gird";
+               alert(value1);
+           }
+           if(select==value2){
+            document.getElementById(value1).style.display="gird";
+            alert(value2);
+               
+           }
+            
+        }
+    </script>
+</head>
+<body style="background-color:  #f5f5f5;;">
+<div class="tieude">
+    <h3 class="thanhtieude" onclick="show_tab23(event,'tab2','tab3')">QUẢN LÍ SINH VIÊN</h3>
+    <div class="addsv">
+        <button><a href="{% url 'addsv' %}">ADD</a></button></div>
+    <form action="/" method="get" class="timkiem">
+        <input type="search" id="search" name="q" placeholder="Nhập từ khóa tìm kiếm...">
+        <button type="submit">Tìm kiếm</button>
+    </form>
+    {% if user.is_authenticated %}
+    <div class="login_dangki" style="display:flex;">
+        <button><a href="{% url 'logout' %}">Đăng xuất</a></button>
+        <p style="color:white;">{{user}}</p>
+    </div>
+    {% else %}
+    <div class="login_dangki">
+        <button><a href="{% url 'login' %}">Đăng nhập</a></button>
+        <button><a href="{% url 'dangki' %}">Đăng kí</a></button>
+        <button><a href="{% url 'dangki' %}">Cart</a></button>
+    </div>
+    {% endif %}
+</div>
+<div class="container" style="display: flex;margin: 20px 10px 10px 150px;">
+    <div class="danhmuc">
+        <h3 style="margin: 5px 5px 5px 10px;">Danh sách sinh viên</h3>
+        <ul style="margin: 5px 5px 5px 10px;">
+            
+            <li class="class-name" onclick="show(event,'name1')"><button style="border: none;background-color: white;font-weight: 500;">sinh viên theo trường:</button>
+                <ul id="name1" class="name">
+                {% for i in t %}
+                    <a href="{% url 'danhmuc' i.pk %}" style="text-decoration: none;color: chocolate;"><li>{{i.mat}}</li></a>
+                {% endfor %}    
+                </ul>
+            </li>
+            <li class="class-name" onclick="show(event,'name2')"><button style="border: none;background-color: white;font-weight: 500;">sinh viên theo khoa</button>
+                <ul id="name2" class="name" >
+                {% for i in k %}
+                    <a href="" style="text-decoration: none;color: chocolate;"><li>{{i.mak}}</li></a>
+                {% endfor %}  
+                    
+                </ul>
+            </li>
+
+        
+        </ul>
+
+    </div>
+    <div>
+        <div class="btn-pl">
+            <button id="tab1linhk" onclick="show_tab1('tab1')">All</button>
+            <select id="select" onchange="show_tab23('tab2','tab3')">
+                <option>_______</option>
+                <option value="tab2" >male</option>
+                <option value="tab3">female</option>
+            </select>
+
+        </div>
+        <div id="tab1" class="tabcontent" class="display:flex;">
+            {% for i in sv %}
+            <div class="show-sv">
+                <img src="myapp/media/{{i.image}}">
+                <h4>Tên:{{i.tensv}}</h4>
+                <p>Lớp:{{i.lop}}</p>
+                <p>khoa:{{i.gender}}ale</p>
+                <div>
+                    <a href="{% url 'viewsv' i.id %}"><button>View</button></a>
+                    <a href="{% url 'editsv' i.id %}"><button>Edit</button></a>
+                    <a href="{% url 'delete' i.id %}"><button>Delete</button></a>
+                    <a href=""><button>add-cart</button></a>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+        <div id="tab2" class="tabcontent">
+            {% for i in male %}
+            <div class="show-sv">
+                <img src="myapp/media/{{i.image}}">
+                <h4>Tên:{{i.tensv}}</h4>
+                <p>Lớp:{{i.lop}}</p>
+                <p>khoa:{{i.gender}}ale</p>
+                <div>
+                    <a href=""><button>View</button></a>
+                    <a href=""><button>add-cart</button></a>
+                    <a href=""><button>Edit</button></a>
+                    <a href=""><button>Delete</button></a>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+        <div id="tab3" class="tabcontent">
+         {% for i in female %}
+            <div class="show-sv">
+                <img src="myapp/media/{{i.image}}">
+                <h4>Tên:{{i.tensv}}</h4>
+                <p>Lớp:{{i.lop}}</p>
+                <p>khoa:{{i.gender}}ale</p>
+                <div>
+                    <a href=""><button>View</button></a>
+                    <a href=""><button>Edit</button></a>
+                    <a href=""><button>Delete</button></a>
+                </div>
+            </div>
+            {% endfor %}
+           
+        </div>
+
+    </div>
+</div>
+<div class="comment">
+    <div id="content-comment" >
+        
+        {% for i in cm %}
+        <div style="display: flex;">
+          <p style="color: #FF0000;margin-right: 10px;">{{i.user}}</p>
+          <p>{{i.text}}</p>
+        </div>
+        {% empty %}
+           <p>không có bình luận nào</p>
+        {% endfor %}
+    </div>
+   <form method="post" enctype="multipart/form-data" action="/">
+    {% csrf_token %}
+    {{form1.as_p}}
+    <button type="submit">gửi</button>
+   </form>
+</div>
+<style>
+*{
+    margin: 0;
+    padding: 0;
+}
+.tieude{
+    display: flex;
+    /* background: linear-gradient(to left,#ff0000 0%, 
+    #ffff00 50%, 
+    #00ff00 100%); */
+    background-color: black;
+    justify-content:space-evenly;
+}
+.thanhtieude{
+    color: aqua;
+    padding:15px 10px 0px 10px;
+    font-size: larger;
+}
+.timkiem,.login_dangki{
+    padding: 10px 10px 10px 10px;
+}
+#search{
+    width: 300px;
+    height: 30px;
+}
+button[type='submit']{
+    width: 70px;
+    height: 30px;
+    color: white;
+    background:linear-gradient(to left,#FF0000,#FF6347);
+}
+div[class="tieude"] div button a{
+    text-decoration: none;
+    color: white;
+    
+    
+}
+
+div[class='login_dangki'] button{
+    color: white;
+    background: #FF4500;
+    width: 70px;
+    height: 30px;
+}
+ul{
+    list-style: none;
+}
+div[class="addsv"] button{
+    margin-top:10px;
+    width: 60px;
+    height: 30px;
+    color: white;
+    background:linear-gradient(to left,#FF0000,#FF6347);
+
+}
+    ul{
+        list-style: none;
+    }
+    .danhmuc{
+        background-color: white;
+
+    }
+    div div ul li ul{
+        margin: 5px 5px 5px 0px;
+        font-size:smaller;
+        display: none;
+    }
+    .class-name{
+        margin-top: 20px;
+        font-size: larger;
+    }
+    .btn-pl{
+        margin: 0px 10px 10px 20px;
+        border-bottom: solid 2px red;
+        width:150px;
+    }
+    div div div[class="btn-pl"] button{
+        margin: 0 10px 0 0;
+        width: 30%;
+        border: none;
+        padding: 10px 10px 10px 10px;
+        background-color: darkcyan;
+        
+    }
+    div div div[class="btn-pl"] select{
+        width: 55%;
+        border: none;
+        outline: none;
+        background-color: #f5f5f5;
+        padding: 10px 10px 10px 10px;
+
+    }
+    div div div[class="btn-pl"] select:hover,div div div[class="btn-pl"] button:hover{
+        background-color: white;
+        cursor:pointer;
+        color: coral;
+
+    }
+    #tab1,#tab2,#tab3{
+        margin: 10px 10px 10px 20px;
+        /* border: solid 2px chartreuse;
+        background-color: white;
+        padding: 10px 10px 10px 10px; */
+        width:100%;
+    }
+    #tab1,#tab2,#tab3{
+        display: grid;
+        grid-template-columns: repeat(4,1fr);
+        grid-template-rows: repeat(2,1fr);
+        gap: 5px;
+       
+
+    }
+    .show-sv{
+        border: solid 2px chartreuse;
+        background-color: white;
+        padding: 10px 10px 10px 10px;
+
+    }
+    .show-sv:hover{
+        cursor: pointer;
+        border: solid 2px chocolate;
+
+    }
+    #tab2,#tab3{
+        display: none;
+    }
+    div div[class="tabcontent"] div div a button{
+        margin: 5px 5px 0 2px;
+        padding: 4px;
+        background-color: aqua;
+        color: white;
+        border-radius: 5px;
+        border: none;
+    }
+    div div[class="tabcontent"] div div a button:hover{
+        cursor: pointer;
+        background-color: black;
+       
+    }
+  
+
+
+
+
+</style>
+</body>
+</html>
